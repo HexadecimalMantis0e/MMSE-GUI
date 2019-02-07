@@ -45,6 +45,7 @@ class MMSE_GUI:
         self.quit = tk.Button(window, text='QUIT', width=25, command=lambda: End(root))
         self.quit.place(x=158, y=145)
 root = tk.Tk()
+root.resizable(0, 0)
 name = tkFileDialog.askopenfilename(filetypes = (("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
 gui = MMSE_GUI(root)
 
