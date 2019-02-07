@@ -45,9 +45,9 @@ class MMSE_GUI:
         self.quit = tk.Button(window, text='QUIT', width=25, command=lambda: End(root))
         self.quit.place(x=158,y=145)
 root = tk.Tk()
-name = tkFileDialog.askopenfilename(initialdir="C:/Users/",
-filetypes =(("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
+name = tkFileDialog.askopenfilename(filetypes = (("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
 gui = MMSE_GUI(root)
+
 f = open(name,"r+b")
 magic = f.read(0x09)
 if magic != "CNC ARRAY":
@@ -56,4 +56,5 @@ f.seek(0x00, os.SEEK_END)
 size = f.tell()
 if size != 0x36:
     raise ValueError("Incorrect save size")
+
 root.mainloop()
