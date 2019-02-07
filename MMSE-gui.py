@@ -6,7 +6,7 @@ import Tkinter, Tkconstants, tkFileDialog
 def Kill(offset,name):
     f.seek(offset, os.SEEK_SET)
     print name, "is dead."
-    return f.write(struct.pack('b', 0x09))
+    return f.write(struct.pack('b', 0x01))
 
 def End(root):
     print "Closing"
@@ -43,7 +43,7 @@ class MMSE_GUI:
         self.farmem.image = image5
         self.farmem.place(x=360, y=250)
         self.quit = tk.Button(window, text='QUIT', width=25, command=lambda: End(root))
-        self.quit.place(x=158,y=145)
+        self.quit.place(x=158, y=145)
 root = tk.Tk()
 name = tkFileDialog.askopenfilename(filetypes = (("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
 gui = MMSE_GUI(root)
