@@ -16,10 +16,10 @@ def End(root):
 class MMSE_GUI:
     def __init__(self, window):
         self.window = window
-        window.title('MMSE')
+        window.title('MMSE-GUI')
         window.geometry("500x318")
         image0 = tk.PhotoImage(file="res/bumbmem.gif")
-        self.bumbmem = tk.Button(window, width=125, height=62, image=image0, command=lambda: Kill(0x1e, "BUMBMEM"))
+        self.bumbmem = tk.Button(window, width=125, height=62, image=image0, command=lambda: Kill(0x1E, "BUMBMEM"))
         self.bumbmem.image = image0
         self.bumbmem.place(x=8)
         image1 = tk.PhotoImage(file="res/glutzmem.gif")
