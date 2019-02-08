@@ -1,12 +1,18 @@
 import Tkinter as tk
+import tkFileDialog
 import os
 import struct
-import Tkinter, Tkconstants, tkFileDialog
+import argparse
 
 def Kill(offset,name):
     f.seek(offset, os.SEEK_SET)
-    print name, "is dead."
-    return f.write(struct.pack('b', 0x01))
+    if args.revive == True:
+        print name, "is alive"
+        return f.write(struct.pack('b', 0x00))
+
+    else:
+        print name, "is dead"
+        return f.write(struct.pack('b', 0x01))
 
 def End(root):
     print "Closing"
@@ -46,6 +52,13 @@ class MMSE_GUI:
         self.quit.place(x=158, y=145)
 root = tk.Tk()
 root.resizable(0, 0)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--revive', action='store_true', help='Revive ROBAT MESTRZ')
+args = parser.parse_args()
+if args.revive == True:
+    print "Revive mode enabled"
+    
 name = tkFileDialog.askopenfilename(filetypes = (("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
 gui = MMSE_GUI(root)
 
