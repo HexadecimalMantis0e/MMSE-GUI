@@ -1,17 +1,17 @@
+from Tkinter import *
 import Tkinter as tk
 import tkFileDialog
 import os
 import struct
-import argparse
 
-def Kill(offset,name):
-    f.seek(offset, os.SEEK_SET)
-    if args.revive == True:
-        print name, "is alive"
-        return f.write(struct.pack("b", 0x00))
-    else:
+def Kill(self, address, var, name):
+    f.seek(address, os.SEEK_SET)
+    if var.get() == 1:
         print name, "is dead"
         return f.write(struct.pack("b", 0x01))
+    else:
+        print name, "is alive"
+        return f.write(struct.pack("b", 0x00))
 
 def End(root):
     print "Closing"
@@ -22,55 +22,131 @@ class MMSE_GUI:
     def __init__(self, window):
         self.window = window
         window.title("MMSE-GUI")
-        image0 = tk.PhotoImage(file="res/bumbmem.gif")
-        self.bumbmem = tk.Button(window, width=125, height=62, image=image0, command=lambda: Kill(0x1E, "BUMBMEM"))
-        self.bumbmem.image = image0
-        self.bumbmem.grid(row=0, column=1)
+        self.image0 = tk.PhotoImage(file="res/bumbmem.gif")
+        self.bumbmempanel = Label(root, image = self.image0)
+        self.bumbmempanel.grid(row=0, column=1)
         self.bumbmemlabel = tk.Label(window, text="BUMBMEM")
         self.bumbmemlabel.grid(row=1, column=1)
-        image1 = tk.PhotoImage(file="res/glutzmem.gif")
-        self.glutzmem = tk.Button(window, width=125, height=62, image=image1, command=lambda: Kill(0x22, "GLUTZMEM"))
-        self.glutzmem.image = image1
-        self.glutzmem.grid(row=0, column=2)
+        self.bumbmemvar = IntVar()
+        self.bumbmemcheck = Checkbutton(root, text="Dead", variable=self.bumbmemvar, command=lambda: Kill(self, 0x1E, self.bumbmemvar,"BUMBMEM"))
+        self.bumbmemcheck.grid(row=2, column=1)
+        self.image1 = tk.PhotoImage(file="res/glutzmem.gif")
+        self.glutzmempanel = Label(root, image = self.image1)
+        self.glutzmempanel.grid(row=0, column=2)
         self.glutzmemlabel = tk.Label(window, text="GLUTZMEM")
         self.glutzmemlabel.grid(row=1, column=2)
-        image2 = tk.PhotoImage(file="res/kutmem.gif")
-        self.kutmem = tk.Button(window, width=125, height=62, image=image2, command=lambda: Kill(0x26, "KUTMEM"))
-        self.kutmem.image = image2
-        self.kutmem.grid(row=0, column=3)
+        self.glutzmemvar = IntVar()
+        self.glutzmemcheck = Checkbutton(root, text="Dead", variable=self.glutzmemvar, command=lambda: Kill(self, 0x22, self.glutzmemvar, "GLUTZMEM"))
+        self.glutzmemcheck.grid(row=2, column=2)
+        self.image2 = tk.PhotoImage(file="res/kutmem.gif")
+        self.kutmempanel = Label(root, image = self.image2)
+        self.kutmempanel.grid(row=0, column=3)
         self.kutmemlabel = tk.Label(window, text="KUTMEM")
         self.kutmemlabel.grid(row=1, column=3)
-        image3 = tk.PhotoImage(file="res/leckmem.gif")
-        self.leckmem = tk.Button(window, width=125, height=62, image=image3, command=lambda: Kill(0x2A, "LECKMEM"))
-        self.leckmem.image = image3
-        self.leckmem.grid(row=2, column=1)
+        self.kutmemvar = IntVar()
+        self.kutmemcheck = Checkbutton(root, text="Dead", variable=self.kutmemvar, command=lambda: Kill(self, 0x26, self.kutmemvar, "KUTMEM"))
+        self.kutmemcheck.grid(row=2, column=3)
+        self.image3 = tk.PhotoImage(file="res/leckmem.gif")
+        self.leckmempanel = Label(root, image = self.image3)
+        self.leckmempanel.grid(row=3, column=1)
         self.leckmemlabel = tk.Label(window, text="LECKMEM")
-        self.leckmemlabel.grid(row=3, column=1)
-        image4 = tk.PhotoImage(file="res/icmem.gif")
-        self.icmem = tk.Button(window, width=125, height=62, image=image4, command=lambda: Kill(0x2E, "ICMEM"))
-        self.icmem.image = image4
-        self.icmem.grid(row=2, column=2)
+        self.leckmemlabel.grid(row=4, column=1)
+        self.leckmemvar = IntVar()
+        self.leckmemcheck = Checkbutton(root, text="Dead", variable=self.leckmemvar, command=lambda: Kill(self, 0x2A, self.leckmemvar, "LECKMEM"))
+        self.leckmemcheck.grid(row=5, column=1)
+        self.image4 = tk.PhotoImage(file="res/icmem.gif")
+        self.icmempanel = Label(root, image = self.image4)
+        self.icmempanel.grid(row=3, column=2)
         self.icmemlabel = tk.Label(window, text="ICMEM")
-        self.icmemlabel.grid(row=3, column=2)
-        image5 = tk.PhotoImage(file="res/farmem.gif")
-        self.farmem = tk.Button(window, width=125, height=62, image=image5, command=lambda: Kill(0x32, "FARMEM"))
-        self.farmem.image = image5
-        self.farmem.grid(row=2, column=3)
+        self.icmemlabel.grid(row=4, column=2)
+        self.icmemvar = IntVar()
+        self.icmemcheck = Checkbutton(root, text="Dead", variable=self.icmemvar, command=lambda: Kill(self, 0x2E, self.icmemvar, "ICMEM"))
+        self.icmemcheck.grid(row=5, column=2)
+        self.image5 = tk.PhotoImage(file="res/farmem.gif")
+        self.farmempanel = Label(root, image = self.image5)
+        self.farmempanel.grid(row=3, column=3)
         self.farmemlabel = tk.Label(window, text="FARMEM")
-        self.farmemlabel.grid(row=3, column=3)
+        self.farmemlabel.grid(row=4, column=3)
+        self.farmemvar = IntVar()
+        self.farmemcheck = Checkbutton(root, text="Dead", variable=self.farmemvar, command=lambda: Kill(self, 0x32, self.farmemvar, "FARMEM"))
+        self.farmemcheck.grid(row=5, column=3)
         self.quit = tk.Button(window, text='QUIT', width=5, command=lambda: End(root))
-        self.quit.grid(row=4, column=2)
+        self.quit.grid(row=6, column=3)
+
+class MM2SE_GUI:
+    def __init__(self, window):
+        self.window = window
+        window.title("MMSE-GUI")
+        self.image0 = tk.PhotoImage(file="res/bubbilmem.gif")
+        self.bubbilmempanel = Label(root, image = self.image0)
+        self.bubbilmempanel.grid(row=0, column=1)
+        self.bubbilmemlabel = tk.Label(window, text="BUBBILMEM")
+        self.bubbilmemlabel.grid(row=1, column=1)
+        self.bubbilmemvar = IntVar()
+        self.bubbilmemcheck = Checkbutton(root, text="Dead", variable=self.bubbilmemvar, command=lambda: Kill(self, 0x1E, self.bubbilmemvar,"BUBBILMEM"))
+        self.bubbilmemcheck.grid(row=2, column=1)
+        self.image1 = tk.PhotoImage(file="res/aremem.gif")
+        self.aremempanel = Label(root, image = self.image1)
+        self.aremempanel.grid(row=0, column=2)
+        self.arememlabel = tk.Label(window, text="AREMEM")
+        self.arememlabel.grid(row=1, column=2)
+        self.arememvar = IntVar()
+        self.arememcheck = Checkbutton(root, text="Dead", variable=self.arememvar, command=lambda: Kill(self, 0x22, self.arememvar,"AREMEM"))
+        self.arememcheck.grid(row=2, column=2)
+        self.image2 = tk.PhotoImage(file="res/kwikmem.gif")
+        self.kwikmempanel = Label(root, image = self.image2)
+        self.kwikmempanel.grid(row=0, column=3)
+        self.kwikmemlabel = tk.Label(window, text="KWIKMEM")
+        self.kwikmemlabel.grid(row=1, column=3)
+        self.kwikmemvar = IntVar()
+        self.kwikmemcheck = Checkbutton(root, text="Dead", variable=self.kwikmemvar, command=lambda: Kill(self, 0x26, self.kwikmemvar, "KWIKMEM"))
+        self.kwikmemcheck.grid(row=2, column=3)
+        self.image3 = tk.PhotoImage(file="res/heetmem.gif")
+        self.heetmempanel = Label(root, image = self.image3)
+        self.heetmempanel.grid(row=0, column=4)
+        self.heetmemlabel = tk.Label(window, text="HEETMEM")
+        self.heetmemlabel.grid(row=1, column=4)
+        self.heetmemvar = IntVar()
+        self.heetmemcheck = Checkbutton(root, text="Dead", variable=self.heetmemvar, command=lambda: Kill(self, 0x2A, self.heetmemvar, "HEETMEM"))
+        self.heetmemcheck.grid(row=2, column=4)
+        self.image4 = tk.PhotoImage(file="res/wudmem.gif")
+        self.wudmempanel = Label(root, image = self.image4)
+        self.wudmempanel.grid(row=3, column=1)
+        self.wudmemlabel = tk.Label(window, text="WUDMEM")
+        self.wudmemlabel.grid(row=4, column=1)
+        self.wudmemvar = IntVar()
+        self.wudmemcheck = Checkbutton(root, text="Dead", variable=self.wudmemvar, command=lambda: Kill(self, 0x32, self.wudmemvar, "WUDMEM"))
+        self.wudmemcheck.grid(row=5, column=1)
+        self.image5 = tk.PhotoImage(file="res/metilmem.gif")
+        self.metilmempanel = Label(root, image = self.image5)
+        self.metilmempanel.grid(row=3, column=2)
+        self.metilmemlabel = tk.Label(window, text="METILMEM")
+        self.metilmemlabel.grid(row=4, column=2)
+        self.metilmemvar = IntVar()
+        self.metilmemcheck = Checkbutton(root, text="Dead", variable=self.metilmemvar, command=lambda: Kill(self, 0x36, self.metilmemvar, "METILMEM"))
+        self.metilmemcheck.grid(row=5, column=2)
+        self.image6 = tk.PhotoImage(file="res/flehsmem.gif")
+        self.flehsmempanel = Label(root, image = self.image6)
+        self.flehsmempanel.grid(row=3, column=3)
+        self.flehsmemlabel = tk.Label(window, text="FLEHSMEM")
+        self.flehsmemlabel.grid(row=4, column=3)
+        self.flehsmemvar = IntVar()
+        self.flehsmemcheck = Checkbutton(root, text="Dead", variable=self.flehsmemvar, command=lambda: Kill(self, 0x3A, self.flehsmemvar, "FLEHSMEM"))
+        self.flehsmemcheck.grid(row=5, column=3)
+        self.image7 = tk.PhotoImage(file="res/kreshmem.gif")
+        self.kreshmempanel = Label(root, image = self.image7)
+        self.kreshmempanel.grid(row=3, column=4)
+        self.kreshmemlabel = tk.Label(window, text="KRESHMEM")
+        self.kreshmemlabel.grid(row=4, column=4)
+        self.kreshmemvar = IntVar()
+        self.kreshmemcheck = Checkbutton(root, text="Dead", variable=self.kreshmemvar, command=lambda: Kill(self, 0x3E, self.kreshmemvar, "KRESHMEM"))
+        self.kreshmemcheck.grid(row=5, column=4)
+        self.quit = tk.Button(window, text='QUIT', width=5, command=lambda: End(root))
+        self.quit.grid(row=6, column=4)
 root = tk.Tk()
 root.resizable(0, 0)
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", "--revive", action="store_true", help="Revive ROBAT MESTRZ")
-args = parser.parse_args()
-if args.revive == True:
-    print "Revive mode enabled"
-    
 name = tkFileDialog.askopenfilename(filetypes = (("Meegah Mem Save", "*.arr"),("All Files","*.*")), title = "Choose a file.")
-gui = MMSE_GUI(root)
 
 f = open(name,"r+b")
 magic = f.read(0x09)
@@ -78,7 +154,11 @@ if magic != "CNC ARRAY":
     raise ValueError("Incorrect header")
 f.seek(0x00, os.SEEK_END)
 size = f.tell()
-if size != 0x36:
+if size == 0x36:
+    gui = MMSE_GUI(root)
+elif size == 0x42:
+    gui = MM2SE_GUI(root)
+else:
     raise ValueError("Incorrect save size")
 
 root.mainloop()
